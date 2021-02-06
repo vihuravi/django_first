@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee</title>
+</head>
+<body>
+        <center><h1>Employee Details</h1></center><br><br>
+            {{msg}}<br><br>
+        <form action="/cbv/save/" method="post">
+            {% csrf_token %}<br>
+           Employee Id : <input type="text" name="eid" value="{{emp.eid}}"><br><br>
+            Employee Name : <input type="text" name="ename" value="{{emp.name}}"><br><br>
+            Employee Age : <input type="text" name="eage" value="{{emp.age}}"><br><br>
+            Employee Salary : <input type="text" name="esal" value="{{emp.salary}}"><br><br>
+            <input type="submit" value="submit">
+        </form>
+
+    <br>
+        {% if emplist %}
+<table border="1">
+                <thead>
+                    <tr><th>Emp Id</th> <th>Emp Name</th> <th>Emp Age</th> <th>Emp Salary</th><th>Action</th></tr>
+                </thead>
+                <tbody>
+                        {% for emp in emplist %}
+                        <tr>
+                            <td>{{emp.eid}}</td>
+                            <td>{{emp.name}}</td>
+                            <td>{{emp.age}}</td>
+                            <td>{{emp.salary}}</td>
+                            <td>
+                                <a href="/cbv/{{emp.eid}}/edit/"><button type="button" class="btn btn-outline-success">EDIT</button></a>
+                                <a href="/cbv/{{emp.eid}}/delete/"><button type="button" class="btn btn-outline-danger">DELETE</button></a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                </tbody>
+            </table>
+            {%else%}
+            <h3>No Records Found In Database</h3>
+        {%endif%}
+
+</body>
+</html>

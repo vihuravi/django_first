@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All Employee</title>
+</head>
+<body>
+        <center><h1>List Of Employees</h1></center><br><br>
+<a href="/gbv/save/">Home</a>
+ {% if object_list %}
+<table border="1">
+                <thead>
+                    <tr><th>Emp Id</th> <th>Emp Name</th> <th>Emp Age</th> <th>Emp Salary</th><th>Active</th><th>Action</th></tr>
+                </thead>
+                <tbody>
+                        {% for emp in object_list %}
+                            {% if emp.active == 'Y' %}
+                        <tr>
+                            <td>{{emp.eid}}</td>
+                            <td>{{emp.name}}</td>
+                            <td>{{emp.age}}</td>
+                            <td>{{emp.salary}}</td>
+                            <td>{{emp.active}}</td>
+                            <td>
+                                <a href="/gbv/{{emp.eid}}/edit/"><button type="button" class="btn btn-outline-success">EDIT</button></a>
+                                <a href="/gbv/{{emp.eid}}/delete/"><button type="button" class="btn btn-outline-danger">DELETE</button></a>
+                            </td>
+
+                        </tr>{% endif%}
+                        {% endfor %}
+                </tbody>
+            </table>
+            {%else%}
+            <h3>No Records Found In Database</h3>
+        {%endif%}
+</body>
+</html>

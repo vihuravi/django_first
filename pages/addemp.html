@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Employee</title>
+</head>
+<body>
+        <center><h1>Add Employee</h1></center><br><br>
+    <a href="/gbv/list/">List</a>
+        <form method="post">
+            {% csrf_token %}<br>
+            {{form.as_p}}<br>
+            <input type="submit" value="Submit">
+        </form>
+
+</body>
+</html>

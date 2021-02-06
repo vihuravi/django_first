@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<style>
+#cover {
+    background: #222 url('https://unsplash.it/1920/1080/?random') center center no-repeat;
+    background-size: cover;
+    height: 100%;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+#cover-caption {
+    width: 100%;
+    position: relative;
+    z-index: 1;
+}
+
+
+
+/* only used for background overlay not needed for centering */
+form:before {
+    content: '';
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    background-color: rgba(0,0,0,0.3);
+    z-index: -1;
+    border-radius: 10px;
+}
+
+$('#myModal').on('shown.bs.modal', function () {
+  $('#myInput').trigger('focus')
+})
+
+.table td {
+   text-align: center;
+}
+.table th {
+   text-align: center;
+}
+    </style>
+</head>
+<body>
+
+<section id="cover" class="min-vh-100">
+    <div id="cover-caption">
+        <div class="container">
+            <div class="row text-white">
+                <div class="col-xl-5 col-lg-6 col-md-8 col-sm-10 mx-auto text-center form p-4">
+                 <h1 class="display-5 py-2 text-truncate">Employee Details</h1>
+                    {% if msg %}
+                    <div class="alert alert-warning alert-dismissible fade show">
+                        <a class="close" data-dismiss="alert" href="#">×</a><font color="red" >{{msg}}</font>
+                    </div>{% endif %}
+      <div class="px-2">
+        <form class="form-horizontal" action="/fbv/emp/save/" method="post">
+                {% csrf_token %}
+
+
+            <div class="form-group">
+            <label class="sr-only">Employee Id : &nbsp;: </label>
+            <input type="text" class="form-control form-control-" id="eid" placeholder="Enter employee id" name="empid" value="{{emp.eid}}">
+            </div>
+
+
+            <div class="form-group">
+            <label class="sr-only">Employee Name : &nbsp;: </label>
+            <input type="text" class="form-control form-control-" id="name" placeholder="Enter employee name" name="empname" value="{{emp.name}}">
+            </div>
+
+
+              <div class="form-group">
+            <label class="sr-only">Employee Age : &nbsp;: </label>
+            <input type="text" class="form-control form-control-" id="age" placeholder="Enter employee age" name="empage" value="{{emp.age}}">
+            </div>
+
+
+
+            <div class="form-group">
+                      <label class="sr-only" for="email">Employee Email : &nbsp;: </label>
+                        <input type="text" class="form-control form-control-" id="email" placeholder="Enter employee email" name="empemail" value="{{emp.email}}">
+                 </div>
+
+
+                 <div class="form-group">
+                      <label class="sr-only" for="salary">Employee Salary : &nbsp;: </label>
+                        <input type="text" class="form-control form-control-" id="salary" placeholder="Enter employee salary" name="empsal" value="{{emp.salary}}">
+                 </div>
+
+            <div class="form-group">
+                      <label class="sr-only" for="role">Employee Role : &nbsp;: </label>
+                        <input type="text" class="form-control form-control-" id="role" placeholder="Enter employee role" name="emprole" value="{{emp.role}}">
+                 </div>
+
+                <div class="form-group">
+                      <label class="sr-only" for="adr">Employee Address : &nbsp;: </label>
+                          <select class="form-control form-control-" id="adr" name="adr" multiple>
+                              {% for adr in adrlist %}
+                              {% if adr in emp.adr.all %}
+                              <option value="{{adr.aid}}" selected>{{adr.city}},{{adr.state}}-{{adr.pincode}}</option>
+                              {% else %}
+                              <option value="{{adr.aid}}">{{adr.city}},{{adr.state}}-{{adr.pincode}}</option>
+                              {% endif %}
+                              {% endfor %}
+                          </select>
+                </div>
+
+                <div class="form-group">
+                  <div class="col-sm-offset-2 col-sm-10 " style="max-width: 100.333%">
+                    <button type="submit" class="btn btn-outline-success">Submit</button>
+                      <a type="button" href="/fbv/adr/" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModal">Add Edit address</a>
+                    </div>
+                </div>
+
+            </form>
+      </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Popup window-->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Address</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" action="/fbv/adr/save/" method="post">
+                {% csrf_token %}
+
+            <div class="form-group">
+            <input type="text" class="form-control form-control-" placeholder="Enter address id" name="adrid" value="{{adr.aid}}">
+            </div>
+
+             <div class="form-group">
+                    <input type="text" class="form-control form-control-" id="city" placeholder="Enter city" name="adrcity" value="{{adr.city}}">
+             </div>
+
+                <div class="form-group">
+                        <input type="text" class="form-control form-control-" id="state" placeholder="Enter state" name="adrstate" value="{{adr.state}}">
+                 </div>
+
+            <div class="form-group">
+                        <input type="text" class="form-control form-control-" id="pincode" placeholder="Enter pincode" name="adrpincode" value="{{adr.pincode}}">
+                 </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-outline-success">Add</button>
+      </div>
+        </form>
+
+
+
+
+{% if adrlist %}
+    <table class="table" border="1">
+        <thead class="thead-dark">
+                    <tr><th>City</th> <th>State</th> <th>Pincode</th> <th>Action</th></tr>
+                </thead>
+                <tbody>
+                        {% for adr in adrlist %}
+                        <tr>
+                            <td>{{adr.city}}</td>
+                            <td>{{adr.state}}</td>
+                            <td>{{adr.pincode}}</td>
+                            <td>
+                                <a href="/fbv/adr/edit/{{adr.aid}}"><button type="button" class="btn btn-outline-success">EDIT</button></a>
+                                <a href="/fbv/adr/delete/{{adr.aid}}"><button type="button" class="btn btn-outline-danger">DELETE</button></a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                </tbody>
+            </table>
+            {%else%}
+            <h3>No Records Found In Database</h3>
+{%endif%}
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+{% if emplist %}
+<div class="bs-example">
+    <table class="table" border="1">
+        <thead class="thead-dark">
+                    <tr><th>Emp Id</th> <th>Emp Name</th> <th>Emp Age</th> <th>Emp Email</th> <th>Emp Salary</th> <th>Emp Role</th> <th>Emp Address</th> <th>Action</th></tr>
+                </thead>
+                <tbody>
+                        {% for emp in emplist %}
+                        <tr>
+                            <td>{{emp.eid}}</td>
+                            <td>{{emp.name}}</td>
+                            <td>{{emp.age}}</td>
+                            <td>{{emp.email}}</td>
+                            <td>{{emp.salary}}</td>
+                            <td>{{emp.role}}</td>
+                            <td>{% for adr in emp.adr.all %}
+                                    {{adr.city}},{{adr.state}}-{{adr.pincode}}<br>
+                                {% endfor %}
+                            </td>
+                            <td>
+                                <a href="/fbv/emp/edit/{{emp.eid}}"><button type="button" class="btn btn-outline-success">EDIT</button></a>
+                                <a href="/fbv/emp/delete/{{emp.eid}}"><button type="button" class="btn btn-outline-danger">DELETE</button></a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                </tbody>
+            </table>
+            {%else%}
+            <h3>No Records Found In Database</h3>
+        {%endif%}
+                </div>
+
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Address</title>
+    <meta name="viewport" content="width=device-width, initial-scale=">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<style>
+
+.table td {
+   text-align: center;
+}
+.table th {
+   text-align: center;
+}
+    </style>
+</head>
+<body>
+            <center><h2><b>Address Details</b></h2></center>
+                <div class="form-group">
+                  <div class="col-sm-offset-2 col-sm-10">
+                    <font color="red" >{{msg}}</font>
+                  </div>
+                </div><br>
+
+        <form class="form-horizontal" action="/fbv/adr/save/" method="post">
+                {% csrf_token %}
+                 <div class="form-group">
+                      <label class="control-label col-sm-2" for="aid">Address Id : &nbsp;: </label>
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" id="aid" placeholder="Enter id" name="adrid" value="{{adr.aid}}">
+                      </div>
+                 </div>
+
+                 <div class="form-group">
+                      <label class="control-label col-sm-2" for="city">Address City : &nbsp;: </label>
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" id="city" placeholder="Enter city" name="adrcity" value="{{adr.city}}">
+                      </div>
+                 </div>
+
+                <div class="form-group">
+                      <label class="control-label col-sm-2" for="state">Address State : &nbsp;: </label>
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" id="state" placeholder="Enter state" name="adrstate" value="{{adr.state}}">
+                      </div>
+                 </div>
+
+            <div class="form-group">
+                      <label class="control-label col-sm-2" for="pincode">Address Pincode : &nbsp;: </label>
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" id="pincode" placeholder="Enter pincode" name="adrpincode" value="{{adr.pincode}}">
+                      </div>
+                 </div>
+
+                <div class="form-group">
+                  <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-outline-success">Submit</button>
+                  </div>
+                </div>
+
+            </form><br>
+
+
+
+
+</body>
+</html>
